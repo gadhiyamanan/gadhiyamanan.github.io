@@ -9,38 +9,38 @@ const Contact = () => {
 
   const copyEmail = () => {
     navigator.clipboard.writeText(portfolioData.email);
-    setCopied(true);
+    setCopied(copied => !copied);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const contactCards = [
     { 
-      label: 'Email', 
+      label: 'Direct Email', 
       value: portfolioData.email, 
       icon: Mail, 
       action: copyEmail,
       color: 'var(--accent-primary)',
-      bg: 'rgba(59, 130, 246, 0.1)'
+      bg: 'hsla(243, 75%, 59%, 0.1)'
     },
     { 
       label: 'LinkedIn', 
-      value: 'manan-gadhiya', 
+      value: 'Professional Network', 
       icon: LinkedInIcon, 
       url: portfolioData.socials.linkedin,
-      color: 'var(--accent-secondary)',
-      bg: 'rgba(139, 92, 246, 0.1)'
+      color: '#0A66C2',
+      bg: 'rgba(10, 102, 194, 0.1)'
     },
     { 
       label: 'GitHub', 
-      value: 'gadhiyamanan', 
+      value: 'Open Source', 
       icon: GitHubIcon, 
       url: portfolioData.socials.github,
-      color: '#fff',
+      color: '#FFFFFF',
       bg: 'rgba(255, 255, 255, 0.05)'
     },
     { 
       label: 'Stack Overflow', 
-      value: 'manan-gadhiya', 
+      value: 'Community Tech', 
       icon: StackOverflowIcon, 
       url: portfolioData.socials.stackoverflow,
       color: '#F48024',
@@ -49,7 +49,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" style={{ paddingBottom: '150px' }}>
+    <section id="contact" style={{ paddingBottom: '100px' }}>
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,17 +57,17 @@ const Contact = () => {
           viewport={{ once: true }}
           style={{ textAlign: 'center', marginBottom: '80px' }}
         >
-          <h2 style={{ fontSize: '3.5rem', marginBottom: '20px', lineHeight: 1.1 }}>
-            Let's <span className="gradient-text">Connect</span>
-          </h2>
-          <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
-            Whether it's a new project or just a quick chat, I'm always open to discussing modern mobile solutions.
+          <div className="badge" style={{ margin: '0 auto 24px' }}>Get In Touch</div>
+          <h2>Let's Start a <br /> <span className="gradient-text">Conversation</span></h2>
+          <p style={{ marginTop: '24px', maxWidth: '540px', margin: '24px auto 0' }}>
+            Whether you have a world-class idea or just want to discuss modern 
+            mobile solutions, my inbox is always open.
           </p>
         </motion.div>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: '20px',
         }}>
           {contactCards.map((card, index) => (
@@ -77,72 +77,79 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              onClick={card.action || (() => window.open(card.url, '_blank'))}
+              onClick={() => card.action ? card.action() : window.open(card.url, '_blank')}
               className="glass-card"
               style={{
-                padding: '40px',
+                padding: 'clamp(24px, 5vw, 40px)',
                 textAlign: 'center',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '20px',
               }}
             >
               <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                borderRadius: '16px',
+                width: '64px', 
+                height: '64px', 
+                borderRadius: '20px',
                 background: card.bg,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: card.color,
-                marginBottom: '10px'
+                marginBottom: '24px',
+                border: '1px solid rgba(255, 255, 255, 0.03)'
               }}>
                 <card.icon size={28} />
               </div>
               
-              <div>
-                <h3 style={{ fontSize: '1.4rem', marginBottom: '5px' }}>{card.label}</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  {card.label === 'Email' && copied ? 'Copied to Clipboard! ✨' : card.value}
-                </p>
-              </div>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>{card.label}</h3>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text)', opacity: 0.7, marginBottom: '24px' }}>
+                {card.label === 'Direct Email' && copied ? '✨ Email Copied!' : card.value}
+              </p>
 
               <div style={{
                 marginTop: 'auto',
-                padding: '10px 20px',
-                borderRadius: '50px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                color: 'var(--text-secondary)',
-                border: '1px solid var(--glass-border)'
+                padding: '10px 24px',
+                borderRadius: '99px',
+                background: 'rgba(255, 255, 255, 0.03)',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                color: '#fff',
+                border: '1px solid var(--border)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
               }}>
-                {card.label === 'Email' ? 'Copy Address' : 'Visit Profile'}
+                {card.label === 'Direct Email' ? 'Copy Address' : 'Visit Profile'}
               </div>
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          style={{ textAlign: 'center', marginTop: '100px' }}
+          style={{ textAlign: 'center', marginTop: '80px', width: '100%' }}
         >
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '30px' }}>Prefer direct mail?</p>
-          <a href={`mailto:${portfolioData.email}`} style={{
-            padding: '18px 40px',
-            background: 'var(--accent-gradient)',
-            color: 'white',
-            borderRadius: '12px',
-            fontWeight: 700,
-            fontSize: '1.1rem',
+          <div className="glass-card" style={{ 
+            padding: 'clamp(24px, 8vw, 60px)', 
+            maxWidth: '1000px', 
+            width: '100%',
+            margin: '0 auto',
+            boxSizing: 'border-box'
           }}>
-            Send an Email Directly
-          </a>
+            <h3 style={{ 
+              fontSize: 'clamp(1.5rem, 6vw, 2.25rem)', 
+              marginBottom: '16px', 
+              lineHeight: 1.2,
+              wordBreak: 'break-word'
+            }}>Ready to build something <span className="gradient-text">Amazing?</span></h3>
+            <p style={{ marginBottom: '40px', opacity: 0.7, fontSize: '0.9rem' }}>Skip the forms and send me a direct mail right now.</p>
+            <a href={`mailto:${portfolioData.email}`} className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+              Send Direct Email <Mail size={18} />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

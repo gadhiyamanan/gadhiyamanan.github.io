@@ -21,6 +21,7 @@ export const portfolioData = {
   },
   tagline:
     "Building world-class mobile apps with React Native & Expo — focusing on smooth UX, modern design patterns, and reliable performance.",
+  profilePic: "/assets/profile.png",
   skills: [
     { name: "React Native CLI", category: "Core" },
     { name: "Expo", category: "Core" },
